@@ -1,0 +1,23 @@
+﻿@page "/"
+
+<div style="background-color: bisque">
+    <JsonEditor @bind-Document="doc" Style="height: 300px; width: 600px" />
+</div>
+
+<div>
+    @doc
+</div>
+
+<div>
+    <button onclick=@Clicked>Set Document</button>
+</div>
+
+@code {
+
+    private string doc = "test";
+
+    private void Clicked()
+    {
+        doc = "document set";
+    }
+}
