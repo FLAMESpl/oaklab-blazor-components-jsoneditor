@@ -1,0 +1,103 @@
+﻿@using Microsoft.JSInterop
+@using OakLab.Blazor.Components.JsonEditor.Structure
+@implements IAsyncDisposable
+
+<pre @ref=htmlElementRef contenteditable="true" class=@Class style=@GetCssStyle()>
+    @foreach (var token in documentStructure.Tokens)
+    {
+        @if (token is JsonEditorBrace)
+        {
+            <span id=@GetNewId() class="oaklab-json-editor-brace">@token.Content</span>
+        }
+        else if (token is JsonEditorText)
+        {
+            <span id=@GetNewId() class="oaklab-json-editor-neutral">@token.Content</span>
+        }
+    }
+</pre>
+
+@code {
+    private DotNetObjectReference<JsonEditor>? jsonEditorRef;
+    private ElementReference htmlElementRef;
+    private JsonEditorDocument documentStructure = new(Array.Empty<IJsonEditorToken>());
+    private string previousDocument = string.Empty;
+    private JsonEditorColorScheme previousColorScheme = JsonEditorColorScheme.Default;
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter]
+    public string? Style { get; set; }
+
+    [Parameter]
+    public string Document { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> DocumentChanged { get; set; }
+
+    [Parameter]
+    public JsonEditorColorScheme ColorScheme { get; set; } = JsonEditorColorScheme.Default;
+
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = null!;
+
+    [JSInvokable]
+    public async Task OnDocumentChanged(OnInputEventArgs args)
+    {
+        Document = args.FullText ?? string.Empty;
+        await DocumentChanged.InvokeAsync(Document);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (jsonEditorRef is not null)
+        {
+            await JsRuntime.InvokeVoidAsync("oaklabJsonEditor.unregisterOnInputEvent", htmlElementRef);
+            jsonEditorRef.Dispose();
+            jsonEditorRef = null;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            jsonEditorRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync("oaklabJsonEditor.registerOnInputEvent", htmlElementRef, jsonEditorRef);
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Document is null)
+            Document = string.Empty;
+
+        bool needsParsing = false;
+
+        if (Document != previousDocument)
+        {
+            previousDocument = Document;
+            needsParsing = true;
+        }
+
+        if (ColorScheme != previousColorScheme)
+        {
+            previousColorScheme = ColorScheme;
+            needsParsing = true;
+        }
+
+        if (needsParsing)
+        {
+            documentStructure = JsonParser.Parse(Document);
+            StateHasChanged();
+        }
+
+        base.OnParametersSet();
+    }
+
+    private string GetCssStyle() => $"{ColorScheme.GetVariables()} {Style}";
+
+    private static string GetNewId() => $"_{Guid.NewGuid()}";
+}

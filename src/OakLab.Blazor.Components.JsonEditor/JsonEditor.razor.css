@@ -1,0 +1,7 @@
+﻿.oaklab-json-editor-brace {
+    color: var(--oaklab-color-json-editor-brace);
+}
+
+.oaklab-json-editor-neutral {
+    color: var(--oaklab-color-json-editor-neutral);
+}

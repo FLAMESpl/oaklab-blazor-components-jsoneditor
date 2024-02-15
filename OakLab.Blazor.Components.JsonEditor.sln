@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OakLab.Blazor.Components.JsonEditor.App", "src\OakLab.Blazor.Components.JsonEditor.App\OakLab.Blazor.Components.JsonEditor.App.csproj", "{5900DF6E-7E99-4CB6-942A-865C182C4316}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OakLab.Blazor.Components.JsonEditor", "src\OakLab.Blazor.Components.JsonEditor\OakLab.Blazor.Components.JsonEditor.csproj", "{5790E931-7891-4645-BE87-892B4FBE7D5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5900DF6E-7E99-4CB6-942A-865C182C4316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5900DF6E-7E99-4CB6-942A-865C182C4316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5900DF6E-7E99-4CB6-942A-865C182C4316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5900DF6E-7E99-4CB6-942A-865C182C4316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5790E931-7891-4645-BE87-892B4FBE7D5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5790E931-7891-4645-BE87-892B4FBE7D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5790E931-7891-4645-BE87-892B4FBE7D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5790E931-7891-4645-BE87-892B4FBE7D5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {257C64C9-E5AE-4D35-84C5-E78A669A5850}
+	EndGlobalSection
+EndGlobal
